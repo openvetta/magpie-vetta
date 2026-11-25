@@ -1,12 +1,13 @@
 {
   "name": "magpie-agent-vetta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Magpie Agent integration for Vetta Desktop",
   "license": "MIT",
   "author": "wshiqyuan",
   "type": "module",
   "magpie": {
-    "agent": "./dist/index.js"
+    "agent": "./dist/index.js",
+    "icon": "https://raw.githubusercontent.com/wshiqyuan/magpie-agent-vetta/main/assets/vetta-icon.png"
   },
   "packageManager": "pnpm@10.34.5",
   "engines": {
