@@ -9,7 +9,15 @@ const execFileAsync = promisify(execFile);
 const skillDirectory = new URL("./fixtures/vetta-skill/", import.meta.url);
 
 describe("Vetta Skill distribution", () => {
+  it("embeds Vetta's checked-in official icon for the Magpie Agent identity", async () => {
+    const icon = await readFile(new URL("../assets/vetta-icon.png", import.meta.url));
+
+    expect(agent.icon).toBe(`data:image/png;base64,${icon.toString("base64")}`);
+    expect(agent.ua).toEqual(["vetta"]);
+  });
+
   it("declares Vetta's dedicated Skills directory", () => {
+    expect(agent.library.instructions).toBe("~/.vetta/agent/AGENTS.md");
     expect(agent.library.skills).toBe("~/.vetta/agent/skills");
     expect(agent.library.skills).not.toContain(".agents/skills");
   });

@@ -1,11 +1,16 @@
+import { vettaIcon } from "./vetta-icon.js";
+
 /** Vetta Agent integration using its existing default runtime marker. */
 export const agent = {
   id: "vetta",
   name: "Vetta",
+  icon: vettaIcon,
+  ua: ["vetta"],
   dir: "~/.vetta/agent",
   config: "~/.vetta/agent/magpie-vetta-state.json",
   notice: "Uses Vetta's default agent directory (~/.vetta/agent).",
   library: {
+    instructions: "~/.vetta/agent/AGENTS.md",
     mcp: "~/.vetta/agent/mcp.json",
     mcpFormat: "claude",
     skills: "~/.vetta/agent/skills",
