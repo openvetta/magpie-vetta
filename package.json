@@ -6,6 +6,9 @@
   "license": "MIT",
   "author": "wshiqyuan",
   "type": "module",
+  "magpie": {
+    "agent": "./dist/index.js"
+  },
   "packageManager": "pnpm@10.34.5",
   "engines": {
     "node": ">=22.23.0 <23 || >=24 <25",

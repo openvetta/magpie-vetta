@@ -1,7 +1,9 @@
 # Magpie Agent Vetta 任务拆分草案
 
+> 2026-11-25 用户调整：项目采用 Vetta 默认目录，不处理旧目录或自定义目录的发现、确认和兜底；下方涉及这些能力的旧草案不再适用。任务 01 的重复操作、开关、模型配置和无关资源由用户手动验收，无需自动化测试；独立安装包留待项目完成后的验收。按此调整，任务 01 已完成，05、06 不再实施，08 中的目录兜底相关验收不再适用。
+
 日期：2026-11-24。来源：本项目规格草案和已确认需求。
-状态：待用户确认拆分；尚未发布任务，也未开始实现。
+状态：拆分草案尚未发布到 Issue Tracker；任务 01、02 已按当前范围完成。
 
 ## 拆分原则
 
@@ -35,14 +37,16 @@
 
 **Blocked by:** 01：默认目录下识别 Vetta 并使用一个 stdio MCP。
 
-**Draft acceptance criteria:**
+**Acceptance criteria (completed):**
 
-- [ ] 使用已建立的 Agent 和目标适配，从 Library 直接分配 Skill，无需另外复制或维护能力包。
-- [ ] Vetta 可发现 Skill 名称描述、加载完整正文、读取相对资源，并在既有权限允许下执行最小脚本。
-- [ ] 宿主采用链接或副本时，Windows 上的实际读取均符合所承诺的支持方式；未验证的方式不声明已支持。
-- [ ] 撤回后，新会话不再从该分配发现测试 Skill，不误删除无关自有资源。
-- [ ] 资源写入使用 Vetta 专属入口，不将其他 Agent 的共享资源入口作为默认目标。
-- [ ] 权限拒绝可定位，不绕过 Vetta 的执行审批；自动化契约测试与 Desktop 烟雾验收都有实际加载证据。
+- [x] 使用已建立的 Agent 和目标适配，从 Library 直接分配 Skill，无需另外复制或维护能力包。
+- [x] Vetta 可发现 Skill 名称描述、加载完整正文、读取相对资源，并在既有权限允许下执行最小脚本。
+- [x] 宿主采用链接或副本时，Windows 上的实际读取符合已验证的支持方式；未验证的方式未声明为支持。
+- [x] 撤回后，新会话不再从该分配发现测试 Skill，不误删除无关自有资源。
+- [x] 资源写入使用 Vetta 专属入口，不将其他 Agent 的共享资源入口作为默认目标。
+- [x] 权限拒绝可定位，不绕过 Vetta 的执行审批；自动化契约测试与 Desktop 手动验收均有实际加载证据。
+
+**Status:** Completed. Automated checks passed, and the user completed the Windows Vetta Desktop manual verification, including Skill loading, attached resources, approved script execution, and withdrawal in a new session.
 
 **Spec coverage:** A7、A10、A11、A14（权限拒绝）。
 
@@ -182,6 +186,6 @@
 
 ## 审阅与发布状态
 
-待用户确认：拆分粒度是否合适、依赖是否真实必要、是否需要合并或继续拆分。此文是审阅草案，不是已经发布的逐票任务集合。
+此文是审阅草案，不是已经发布的逐票任务集合。任务 01、02 的实施状态按各任务记录；其他任务状态不受此次完成记录影响。
 
 当前未配置 Issue Tracker 与 triage 标签约定。按 to-tickets Skill，需先运行 `/setup-matt-pocock-skills`。确认拆分后，若配置为本地 Tracker，按 Skill 约定输出每票一个文件及其 Blocked by；若配置为远程 Tracker，按依赖顺序创建 Issue 并设置阻塞关系和 `ready-for-agent` 标签。不会擅自把任何上游仓库作为本项目发布目标。
