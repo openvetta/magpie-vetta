@@ -1,6 +1,6 @@
 {
   "name": "magpie-vetta",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "magpie-vetta (Official): connect Magpie's models, MCP servers and Skills to Vetta Desktop, maintained by the Vetta team",
   "license": "MIT",
   "author": "openvetta",
