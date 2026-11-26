@@ -1,7 +1,7 @@
 # Vetta Icon
 
 `vetta-icon.png` is copied from the Vetta Desktop repository at commit
-`988e830f7fa2bfa710878ae26b38ddd0c99d1b48`:
+`1793f66d177a5cb30b7b4e0e6593eacce69d513c`:
 
 `apps/desktop/src/renderer/public/icon.png`
 
