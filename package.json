@@ -8,7 +8,6 @@
     "wshiqyuan (https://github.com/wshiqyuan)"
   ],
   "type": "module",
-  "main": "./dist/index.js",
   "magpie": {
     "agent": "./dist/index.js",
     "icon": "https://raw.githubusercontent.com/openvetta/magpie-vetta/main/assets/vetta-icon.png"
