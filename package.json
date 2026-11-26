@@ -1,14 +1,17 @@
 {
-  "name": "magpie-agent-vetta",
-  "version": "0.1.2",
-  "description": "Magpie Agent integration for Vetta Desktop",
+  "name": "magpie-vetta",
+  "version": "0.2.0",
+  "description": "magpie-vetta (Official): connect Magpie's models, MCP servers and Skills to Vetta Desktop, maintained by the Vetta team",
   "license": "MIT",
-  "author": "wshiqyuan",
+  "author": "openvetta",
+  "contributors": [
+    "wshiqyuan (https://github.com/wshiqyuan)"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "magpie": {
     "agent": "./dist/index.js",
-    "icon": "https://raw.githubusercontent.com/wshiqyuan/magpie-agent-vetta/main/assets/vetta-icon.png"
+    "icon": "https://raw.githubusercontent.com/openvetta/magpie-vetta/main/assets/vetta-icon.png"
   },
   "packageManager": "pnpm@10.34.5",
   "engines": {
@@ -17,13 +20,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wshiqyuan/magpie-agent-vetta.git"
+    "url": "git+https://github.com/openvetta/magpie-vetta.git"
   },
   "keywords": [
     "magpie",
     "magpie-agent",
+    "magpie-plugin",
     "vetta",
-    "ai-agent"
+    "ai-agent",
+    "official"
   ],
   "scripts": {
     "build": "tsdown",
@@ -53,5 +58,9 @@
     "dist",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "homepage": "https://github.com/openvetta/magpie-vetta#readme",
+  "bugs": {
+    "url": "https://github.com/openvetta/magpie-vetta/issues"
+  }
 }

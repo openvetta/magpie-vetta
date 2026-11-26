@@ -1,6 +1,6 @@
-# Magpie Agent for Vetta
+# magpie-vetta (Official)
 
-为 [Vetta Desktop](https://github.com/openvetta/open-vetta) 提供 Magpie Agent 集成。在 Magpie 的 Agents 页打开 Vetta，Magpie 的模型就会出现在 Vetta 里，关掉即移除；同时通过 Library 向 Vetta 分发全局指令、MCP 服务器和 Skills。
+Vetta 官方维护的 Magpie 插件，为 [Vetta Desktop](https://github.com/openvetta/open-vetta) 提供 Magpie Agent 集成，随 Vetta 版本同步更新。在 Magpie 的 Agents 页打开 Vetta，Magpie 的模型就会出现在 Vetta 里，关掉即移除；同时通过 Library 向 Vetta 分发全局指令、MCP 服务器和 Skills。
 
 ## 功能
 
@@ -15,7 +15,7 @@ Magpie 是 Vetta 使用 Magpie 模型的唯一入口：Vetta 设置里的 Magpie
 
 ## 安装
 
-发布到 Magpie 插件目录后，可在 Magpie 的插件发现页搜索 **Vetta** 并安装。源码本地安装可使用：
+在 Magpie 的插件发现页搜索 **magpie-vetta** 并安装，然后到 Agents 页打开 Vetta。源码本地安装可使用：
 
 ```sh
 pnpm install --frozen-lockfile
@@ -45,8 +45,12 @@ MCP 使用 `mcpServers` 配置格式。资源由 Magpie Library 管理；通过 
 
 需要 Vetta 0.6.27 及以上版本。Vetta 从这个版本起认得 Magpie 写入的模型配置，并把 Magpie 作为唯一入口：之前在 Vetta 设置里启用的 Magpie 会在升级后首次启动时移除，并弹窗提示改在 Magpie 中接入。更早的 Vetta 会把这条配置里的密钥挪走，Magpie 会因此认为连接已被改动。
 
-插件使用 Vetta 默认目录 `~/.vetta/agent`。旧目录和自定义目录需要由用户自行迁移或管理。当前已在 Windows 上验证 Magpie 插件加载和 Vetta Library 资源分发；macOS、Linux 和其他 Vetta 启动配置尚未验证。
+插件使用 Vetta 默认目录 `~/.vetta/agent`。旧目录和自定义目录需要由用户自行迁移或管理。Magpie 插件加载和 Vetta Library 资源分发已在 Windows 上验证，Agents 页开关与模型接入已在 macOS 上验证；Linux 和其他 Vetta 启动配置尚未验证。
+
+## 鸣谢
+
+本插件基于 [wshiqyuan](https://github.com/wshiqyuan) 的 [magpie-agent-vetta](https://github.com/wshiqyuan/magpie-agent-vetta) 发展而来，并保留了其完整提交历史。Vetta 的 Agent 身份、Library 资源分发（全局指令、MCP、Skills）以及最初的 Magpie 接入都出自他的工作，感谢他为 Vetta 社区做的贡献。为了跟上 Vetta 的发版节奏，现由 Vetta 团队在这里维护，也欢迎他继续一起参与。
 
 ## 许可证
 
-本项目采用 [MIT License](LICENSE)。Vetta 图标取自 Vetta Desktop 仓库的 `apps/desktop/src/renderer/public/icon.png`，来源代码版本为 [`1793f66`](https://github.com/openvetta/open-vetta/tree/1793f66d177a5cb30b7b4e0e6593eacce69d513c)，遵循其 MIT 许可证。
+本项目采用 [MIT License](LICENSE)，版权归原作者 wshiqyuan 与 openvetta 共同所有。Vetta 图标取自 Vetta Desktop 仓库的 `apps/desktop/src/renderer/public/icon.png`，来源代码版本为 [`1793f66`](https://github.com/openvetta/open-vetta/tree/1793f66d177a5cb30b7b4e0e6593eacce69d513c)，遵循其 MIT 许可证。
