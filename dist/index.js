@@ -1,5 +1,11 @@
 // src/index.ts
-/** Vetta Agent integration using its existing default runtime marker. */
+/**
+* Vetta keeps its model providers in ~/.vetta/agent/models.json. With no `model`
+* key the Agents row is a switch: switching Vetta on writes `providers.magpie`
+* there, switching it off puts the file back. Vetta 0.6.27+ reads an entry marked
+* `source: "magpie"` as owned by Magpie: it shows it read-only and leaves the key
+* in the file, so Magpie can still see it is connected.
+*/
 const agent = {
 	id: "vetta",
 	name: "Vetta",
@@ -836,8 +842,9 @@ const agent = {
 	].join(""),
 	ua: ["vetta"],
 	dir: "~/.vetta/agent",
-	config: "~/.vetta/agent/magpie-vetta-state.json",
-	notice: "Uses Vetta's default agent directory (~/.vetta/agent).",
+	config: "~/.vetta/agent/models.json",
+	format: "json",
+	notice: "Vetta 0.6.27+ shows Magpie's models in its model picker right away; choose a model there. Vetta 0.6.27 及以上会立即在模型选择器里显示 Magpie 的模型，在 Vetta 里选择即可。",
 	library: {
 		instructions: "~/.vetta/agent/AGENTS.md",
 		mcp: "~/.vetta/agent/mcp.json",
@@ -845,10 +852,65 @@ const agent = {
 		skills: "~/.vetta/agent/skills"
 	}
 };
-/** Host-owned marker; Vetta model settings are not changed. */
-function connect() {
-	return { enabled: true };
+/** Efforts that mean "no thinking" are not a level Vetta can pick. */
+const NO_THINKING = /* @__PURE__ */ new Set(["none", "off"]);
+/** Magpie prices are USD per token; Vetta's are USD per million tokens. */
+const PER_MILLION = 1e6;
+function perMillion(price) {
+	if (price === void 0) return void 0;
+	const value = Number(price);
+	return Number.isFinite(value) ? value * PER_MILLION : void 0;
 }
-export { agent, connect };
+function vettaModel(model) {
+	const levels = (model.efforts ?? []).filter((effort) => !NO_THINKING.has(effort));
+	const entry = {
+		id: model.id,
+		name: model.name || model.id,
+		input: model.images ? ["text", "image"] : ["text"],
+		reasoning: levels.length > 0
+	};
+	if (levels.length > 0) entry.reasoningLevels = levels;
+	if (model.context && model.context > 0) entry.contextWindow = model.context;
+	if (model.output && model.output > 0) entry.maxTokens = model.context && model.context > 0 ? Math.min(model.output, model.context) : model.output;
+	const input = perMillion(model.pricing?.prompt);
+	const output = perMillion(model.pricing?.completion);
+	if (input !== void 0 && output !== void 0) entry.cost = {
+		input,
+		output,
+		cacheRead: perMillion(model.pricing?.input_cache_read) ?? 0,
+		cacheWrite: perMillion(model.pricing?.input_cache_write) ?? 0
+	};
+	return entry;
+}
+/**
+* The whole provider is written and restored as one unit, as PiG's plugin does:
+* leaf-only writes would leave an empty provider behind after switching off.
+* Routing groups (`auto/...`) are offered as models too, as Magpie's /v1/models lists them.
+*/
+function connect({ gateway, models, decisionModels = [] }) {
+	const entries = models.map(vettaModel);
+	const ids = new Set(entries.map((entry) => entry.id));
+	for (const group of decisionModels) {
+		if (!group.group || ids.has(group.id)) continue;
+		ids.add(group.id);
+		entries.push({
+			id: group.id,
+			name: group.name || group.id,
+			input: ["text"],
+			reasoning: false
+		});
+	}
+	return { "providers.magpie": {
+		source: "magpie",
+		displayName: "Magpie",
+		icon: "magpie",
+		baseUrl: gateway.v1,
+		apiKey: gateway.key,
+		api: "openai-completions",
+		headers: { "User-Agent": "Vetta" },
+		models: entries
+	} };
+}
+export { agent, connect, vettaModel };
 
 //# sourceMappingURL=index.js.map
