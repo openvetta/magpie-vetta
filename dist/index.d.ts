@@ -40,13 +40,17 @@ export interface MagpieDecisionModel {
   name?: string;
   group?: boolean;
 }
+/**
+ * Magpie also calls connect while loading the plugin, to see which keys it writes,
+ * and that call carries no model list; every field is treated as possibly missing.
+ */
 export interface ConnectInput {
-  gateway: {
-    url: string;
-    v1: string;
-    key: string;
+  gateway?: {
+    url?: string;
+    v1?: string;
+    key?: string;
   };
-  models: MagpieModel[];
+  models?: MagpieModel[];
   decisionModels?: MagpieDecisionModel[];
 }
 export interface VettaModel {
@@ -70,13 +74,13 @@ export declare function vettaModel(model: MagpieModel): VettaModel;
  * leaf-only writes would leave an empty provider behind after switching off.
  * Routing groups (`auto/...`) are offered as models too, as Magpie's /v1/models lists them.
  */
-export declare function connect({ gateway, models, decisionModels }: ConnectInput): {
+export declare function connect({ gateway, models, decisionModels }?: ConnectInput): {
   "providers.magpie": {
     source: string;
     displayName: string;
     icon: string;
-    baseUrl: string;
-    apiKey: string;
+    baseUrl: string | undefined;
+    apiKey: string | undefined;
     api: string;
     headers: {
       "User-Agent": string;

@@ -46,9 +46,13 @@ export interface MagpieDecisionModel {
   group?: boolean;
 }
 
+/**
+ * Magpie also calls connect while loading the plugin, to see which keys it writes,
+ * and that call carries no model list; every field is treated as possibly missing.
+ */
 export interface ConnectInput {
-  gateway: { url: string; v1: string; key: string };
-  models: MagpieModel[];
+  gateway?: { url?: string; v1?: string; key?: string };
+  models?: MagpieModel[];
   decisionModels?: MagpieDecisionModel[];
 }
 
@@ -107,7 +111,7 @@ export function vettaModel(model: MagpieModel): VettaModel {
  * leaf-only writes would leave an empty provider behind after switching off.
  * Routing groups (`auto/...`) are offered as models too, as Magpie's /v1/models lists them.
  */
-export function connect({ gateway, models, decisionModels = [] }: ConnectInput) {
+export function connect({ gateway, models = [], decisionModels = [] }: ConnectInput = {}) {
   const entries = models.map(vettaModel);
   const ids = new Set(entries.map((entry) => entry.id));
   for (const group of decisionModels) {
@@ -120,8 +124,8 @@ export function connect({ gateway, models, decisionModels = [] }: ConnectInput) 
       source: "magpie",
       displayName: "Magpie",
       icon: "magpie",
-      baseUrl: gateway.v1,
-      apiKey: gateway.key,
+      baseUrl: gateway?.v1,
+      apiKey: gateway?.key,
       api: "openai-completions",
       // Requests are attributed by the agent's own key; the header also names Vetta
       // to anything that only reads User-Agent.

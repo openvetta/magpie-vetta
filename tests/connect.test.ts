@@ -61,4 +61,10 @@ describe("Vetta model connection", () => {
       "auto/glm-5.4",
     ]);
   });
+
+  it("survives the call Magpie makes while loading the plugin, which has no model list", () => {
+    expect(() => connect({ gateway })).not.toThrow();
+    expect(connect({ gateway })["providers.magpie"].models).toEqual([]);
+    expect(() => connect()).not.toThrow();
+  });
 });

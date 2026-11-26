@@ -887,7 +887,7 @@ function vettaModel(model) {
 * leaf-only writes would leave an empty provider behind after switching off.
 * Routing groups (`auto/...`) are offered as models too, as Magpie's /v1/models lists them.
 */
-function connect({ gateway, models, decisionModels = [] }) {
+function connect({ gateway, models = [], decisionModels = [] } = {}) {
 	const entries = models.map(vettaModel);
 	const ids = new Set(entries.map((entry) => entry.id));
 	for (const group of decisionModels) {
@@ -904,8 +904,8 @@ function connect({ gateway, models, decisionModels = [] }) {
 		source: "magpie",
 		displayName: "Magpie",
 		icon: "magpie",
-		baseUrl: gateway.v1,
-		apiKey: gateway.key,
+		baseUrl: gateway?.v1,
+		apiKey: gateway?.key,
 		api: "openai-completions",
 		headers: { "User-Agent": "Vetta" },
 		models: entries
